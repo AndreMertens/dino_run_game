@@ -120,7 +120,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   // Makes the dino jump.
   void jump() {
     // Jump only if dino is on ground.
-    if (isOnGround) {
+    if (isOnGround && !isHit) {
       speedY = -300;
       current = DinoAnimationStates.idle;
       AudioManager.instance.playSfx('jump14.wav');
