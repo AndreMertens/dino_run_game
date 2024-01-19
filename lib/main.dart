@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'game/dino_run.dart';
 import 'models/player_data.dart';
+import 'widgets/game_over_menu.dart';
 import 'widgets/hud.dart';
 
 Future<void> main() async {
@@ -68,7 +69,7 @@ class DinoRunApp extends StatelessWidget {
           // Register all the overlays that will be used by this game.
           overlayBuilderMap: {
             Hud.id: (_, game) => Hud(game),
-            // 47.
+            GameOverMenu.id: (_, game) => GameOverMenu(game),
             // 49.
             // 56.
             // 90.

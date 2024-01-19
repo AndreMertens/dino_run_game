@@ -8,6 +8,7 @@ import 'package:flame/parallax.dart';
 import 'package:hive/hive.dart';
 
 import '../models/player_data.dart';
+import '../widgets/game_over_menu.dart';
 import '../widgets/hud.dart';
 import 'enemy_manager.dart';
 
@@ -114,7 +115,35 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     return playerDataBox.get('DinoRun.PlayerData')!;
   }
 
-  // 45.
+  // This method remove all the actors from the game.
+  void _disconnectActors() {
+    _dino.removeFromParent();
+    _enemyManager.removeAllEnemies();
+    _enemyManager.removeFromParent();
+  }
+
+// This method reset the whole game world to initial state.
+  void reset() {
+    // First disconnect all actions from game world.
+    _disconnectActors();
+
+    // Reset player data to initial values.
+    playerData.currentScore = 0;
+    playerData.lives = 5;
+  }
+
+// This method gets called for each tick/frame of the game.
+  @override
+  void update(double dt) {
+    // If number of lives is 0 or less, game is over.
+    if (playerData.lives <= 0) {
+      overlays.add(GameOverMenu.id);
+      overlays.remove(Hud.id);
+      pauseEngine();
+      // 62.
+    }
+    super.update(dt);
+  }
 
   // 88.
 }

@@ -94,5 +94,10 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
     super.update(dt);
   }
 
-  // 46.
+  void removeAllEnemies() {
+    final enemies = game.world.children.whereType<Enemy>();
+    for (var enemy in enemies) {
+      enemy.removeFromParent();
+    }
+  }
 }
