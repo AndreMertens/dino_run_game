@@ -27,7 +27,14 @@ class Enemy extends SpriteAnimationComponent
     // big compared to the dino.
     size *= 0.6;
 
-    // 29.
+    // Add a hitbox for this enemy.
+    add(
+      RectangleHitbox.relative(
+        Vector2.all(0.8),
+        parentSize: size,
+        position: Vector2(size.x * 0.2, size.y * 0.2) / 2,
+      ),
+    );
 
     super.onMount();
   }

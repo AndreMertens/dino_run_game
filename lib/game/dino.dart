@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 import '/game/dino_run.dart';
+import 'enemy.dart';
 
 /// This enum represents the animation states of [Dino].
 enum DinoAnimationStates {
@@ -57,7 +58,9 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   double speedY = 0.0;
   static const double gravity = 800;
 
-  // 23.
+  // Controls how long the hit animations will be played.
+  final Timer _hitTimer = Timer(1);
+  bool isHit = false;
 
   Dino(
     Image image,
@@ -71,7 +74,20 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
 
     yMax = y;
 
-    // 24.
+    // Add a hitbox for dino.
+    add(
+      RectangleHitbox.relative(
+        Vector2(0.5, 0.7),
+        parentSize: size,
+        position: Vector2(size.x * 0.5, size.y * 0.3) / 2,
+      ),
+    );
+
+    // Set the callback for [_hitTimer].
+    _hitTimer.onTick = () {
+      current = DinoAnimationStates.run;
+      isHit = false;
+    };
 
     super.onMount();
   }
@@ -88,13 +104,12 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
     if (isOnGround) {
       y = yMax;
       speedY = 0.0;
-      if ((current != DinoAnimationStates.run)
-          // 25.
-          ) {
+      if ((current != DinoAnimationStates.run) &&
+          (current != DinoAnimationStates.hit)) {
         current = DinoAnimationStates.run;
       }
     }
-    // 26.
+    _hitTimer.update(dt);
     super.update(dt);
   }
 
@@ -122,8 +137,28 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
     size = Vector2.all(24);
     current = DinoAnimationStates.run;
     speedY = 0.0;
-    // 27.
+    isHit = false;
   }
 
-  // 28.
+  // Gets called when dino collides with other Collidables.
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    // Call hit only if other component is an Enemy and dino
+    // is not already in hit state.
+    if ((other is Enemy) && (!isHit)) {
+      hit();
+    }
+    super.onCollision(intersectionPoints, other);
+  }
+
+  // This method changes the animation state to
+  // [DinoAnimationStates.hit], plays the hit sound
+  // effect and reduces the player life by 1.
+  void hit() {
+    isHit = true;
+    // 64.
+    current = DinoAnimationStates.hit;
+    _hitTimer.start();
+    // 43.
+  }
 }
