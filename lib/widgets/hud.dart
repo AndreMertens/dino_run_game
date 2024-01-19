@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '/game/dino_run.dart';
 import '/models/player_data.dart';
+import '../game/audio_manager.dart';
 import 'pause_menu.dart';
 
 // This represents the head up display in game.
@@ -54,7 +55,7 @@ class Hud extends StatelessWidget {
                 game.overlays.remove(Hud.id);
                 game.overlays.add(PauseMenu.id);
                 game.pauseEngine();
-                // 67.
+                AudioManager.instance.pauseBgm();
               },
               child: const Icon(Icons.pause, color: Colors.white),
             ),

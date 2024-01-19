@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '/game/dino_run.dart';
 import '/models/player_data.dart';
 import '/widgets/hud.dart';
+import '../game/audio_manager.dart';
 import 'main_menu.dart';
 
 // This represents the game over overlay,
@@ -67,7 +68,7 @@ class GameOverMenu extends StatelessWidget {
                         game.resumeEngine();
                         game.reset();
                         game.startGamePlay();
-                        // 65.
+                        AudioManager.instance.resumeBgm();
                       },
                     ),
                     ElevatedButton(
@@ -82,7 +83,7 @@ class GameOverMenu extends StatelessWidget {
                         game.overlays.add(MainMenu.id);
                         game.resumeEngine();
                         game.reset();
-                        // 66.
+                        AudioManager.instance.resumeBgm();
                       },
                     ),
                   ],

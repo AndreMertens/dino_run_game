@@ -10,6 +10,7 @@ import 'package:hive/hive.dart';
 import '../models/player_data.dart';
 import '../widgets/game_over_menu.dart';
 import '../widgets/hud.dart';
+import 'audio_manager.dart';
 import 'enemy_manager.dart';
 
 // This is the main flame game class.
@@ -30,7 +31,12 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     'parallax/plx-6.png',
   ];
 
-  // 60.
+  // List of all the audio assets.
+  static const _audioAssets = [
+    '8BitPlatformerLoop.wav',
+    'hurt7.wav',
+    'jump14.wav',
+  ];
 
   late Dino _dino;
 
@@ -54,7 +60,15 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
     // 86.
 
-    // 61.
+    // Initialize [AudioManager].
+    await AudioManager.instance.init(
+      _audioAssets,
+      // 87.
+    );
+
+    // Start playing background music. Internally takes care
+    // of checking user settings.
+    AudioManager.instance.startBgm('8BitPlatformerLoop.wav');
 
     // Cache all the images.
     await images.loadAll(_imageAssets);
@@ -139,7 +153,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
       overlays.add(GameOverMenu.id);
       overlays.remove(Hud.id);
       pauseEngine();
-      // 62.
+      AudioManager.instance.pauseBgm();
     }
     super.update(dt);
   }

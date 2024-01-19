@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 import '/game/dino_run.dart';
+import 'audio_manager.dart';
 import 'enemy.dart';
 
 /// This enum represents the animation states of [Dino].
@@ -122,7 +123,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
     if (isOnGround) {
       speedY = -300;
       current = DinoAnimationStates.idle;
-      // 63.
+      AudioManager.instance.playSfx('jump14.wav');
     }
   }
 
@@ -156,7 +157,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   // effect and reduces the player life by 1.
   void hit() {
     isHit = true;
-    // 64.
+    AudioManager.instance.playSfx('hurt7.wav');
     current = DinoAnimationStates.hit;
     _hitTimer.start();
     game.playerData.lives -= 1;

@@ -7,6 +7,7 @@ import '/game/dino_run.dart';
 import '/models/player_data.dart';
 import '/widgets/hud.dart';
 import '/widgets/main_menu.dart';
+import '../game/audio_manager.dart';
 
 // This represents the pause menu overlay.
 class PauseMenu extends StatelessWidget {
@@ -57,7 +58,7 @@ class PauseMenu extends StatelessWidget {
                         game.overlays.remove(PauseMenu.id);
                         game.overlays.add(Hud.id);
                         game.resumeEngine();
-                        // 68.
+                        AudioManager.instance.resumeBgm();
                       },
                       child: const Text(
                         'Resume',
@@ -73,7 +74,7 @@ class PauseMenu extends StatelessWidget {
                         game.resumeEngine();
                         game.reset();
                         game.startGamePlay();
-                        // 69.
+                        AudioManager.instance.resumeBgm();
                       },
                       child: const Text(
                         'Restart',
@@ -88,7 +89,7 @@ class PauseMenu extends StatelessWidget {
                         game.overlays.add(MainMenu.id);
                         game.resumeEngine();
                         game.reset();
-                        // 70.
+                        AudioManager.instance.resumeBgm();
                       },
                       child: const Text(
                         'Exit',
