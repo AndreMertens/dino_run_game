@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '/game/dino_run.dart';
 import '/models/player_data.dart';
 import '/widgets/hud.dart';
+import 'main_menu.dart';
 
 // This represents the game over overlay,
 // displayed with dino runs out of lives.
@@ -69,7 +70,21 @@ class GameOverMenu extends StatelessWidget {
                         // 65.
                       },
                     ),
-                    // 54.
+                    ElevatedButton(
+                      child: const Text(
+                        'Exit',
+                        style: TextStyle(
+                          fontSize: 30,
+                        ),
+                      ),
+                      onPressed: () {
+                        game.overlays.remove(GameOverMenu.id);
+                        game.overlays.add(MainMenu.id);
+                        game.resumeEngine();
+                        game.reset();
+                        // 66.
+                      },
+                    ),
                   ],
                 ),
               ),

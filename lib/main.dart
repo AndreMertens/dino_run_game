@@ -9,6 +9,7 @@ import 'game/dino_run.dart';
 import 'models/player_data.dart';
 import 'widgets/game_over_menu.dart';
 import 'widgets/hud.dart';
+import 'widgets/main_menu.dart';
 
 Future<void> main() async {
   // Ensures that all bindings are initialized
@@ -70,11 +71,12 @@ class DinoRunApp extends StatelessWidget {
           overlayBuilderMap: {
             Hud.id: (_, game) => Hud(game),
             GameOverMenu.id: (_, game) => GameOverMenu(game),
-            // 49.
+            MainMenu.id: (_, game) => MainMenu(game),
             // 56.
             // 90.
           },
-          // 50.
+          // By default MainMenu overlay will be active.
+          initialActiveOverlays: const [MainMenu.id],
           gameFactory: () => DinoRun(
             // Use a fixed resolution camera to avoid manually
             // scaling and handling different screen sizes.

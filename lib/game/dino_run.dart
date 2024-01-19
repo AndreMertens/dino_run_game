@@ -78,10 +78,6 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
     // Add the parallax as the backdrop.
     camera.backdrop.add(parallaxBackground);
-
-    startGamePlay();
-
-    overlays.add(Hud.id);
   }
 
   void startGamePlay() {
@@ -94,8 +90,11 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
   // This will get called for each tap on the screen.
   @override
   void onTapDown(TapDownInfo info) {
-    _dino.jump();
-    // 53.
+    // Make dino jump only when game is playing.
+    // When game is in playing state, only Hud will be the active overlay.
+    if (overlays.isActive(Hud.id)) {
+      _dino.jump();
+    }
     super.onTapDown(info);
   }
 
