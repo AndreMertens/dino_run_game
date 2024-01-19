@@ -159,6 +159,6 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
     // 64.
     current = DinoAnimationStates.hit;
     _hitTimer.start();
-    // 43.
+    game.playerData.lives -= 1;
   }
 }

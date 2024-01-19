@@ -48,7 +48,7 @@ class Enemy extends SpriteAnimationComponent
     if (position.x < -enemyData.textureSize.x) {
       removeFromParent();
 
-      // 42.
+      game.playerData.currentScore += 1;
     }
 
     super.update(dt);

@@ -5,7 +5,10 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
+import 'package:hive/hive.dart';
 
+import '../models/player_data.dart';
+import '../widgets/hud.dart';
 import 'enemy_manager.dart';
 
 // This is the main flame game class.
@@ -32,7 +35,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
   late EnemyManager _enemyManager;
 
-  // 38.
+  late PlayerData playerData;
 
   // 85.
 
@@ -45,7 +48,8 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     await Flame.device.fullScreen();
     await Flame.device.setLandscape();
 
-    // 39.
+    // Read [PlayerData] and [Settings] from hive.
+    playerData = await _readPlayerData();
 
     // 86.
 
@@ -76,7 +80,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
     startGamePlay();
 
-    // 40.
+    overlays.add(Hud.id);
   }
 
   void startGamePlay() {
@@ -94,7 +98,21 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     super.onTapDown(info);
   }
 
-  // 41.
+  //This method reads [PlayerData] from the hive box.
+  Future<PlayerData> _readPlayerData() async {
+    final playerDataBox =
+        await Hive.openBox<PlayerData>('DinoRun.PlayerDataBox');
+    final playerData = playerDataBox.get('DinoRun.PlayerData');
+
+    //If data is null, this is probably a fresh launch of the game.
+    if (playerData == null) {
+      //In such cases store default values in hive.
+      await playerDataBox.put('DinoRun.PlayerData', PlayerData());
+    }
+
+    // Now it is safe to return the stored value.
+    return playerDataBox.get('DinoRun.PlayerData')!;
+  }
 
   // 45.
 
