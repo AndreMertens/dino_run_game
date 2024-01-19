@@ -8,6 +8,7 @@ import 'package:flame/parallax.dart';
 import 'package:hive/hive.dart';
 
 import '../models/player_data.dart';
+import '../models/settings.dart';
 import '../widgets/game_over_menu.dart';
 import '../widgets/hud.dart';
 import 'audio_manager.dart';
@@ -44,7 +45,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
   late PlayerData playerData;
 
-  // 85.
+  late Settings settings;
 
   Vector2 get virtualSize => camera.viewport.virtualSize;
 
@@ -58,12 +59,12 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     // Read [PlayerData] and [Settings] from hive.
     playerData = await _readPlayerData();
 
-    // 86.
+    settings = await _readSettings();
 
     // Initialize [AudioManager].
     await AudioManager.instance.init(
       _audioAssets,
-      // 87.
+      settings,
     );
 
     // Start playing background music. Internally takes care
@@ -158,5 +159,21 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     super.update(dt);
   }
 
-  // 88.
+  // This method reads [Settings] from the hive box.
+  Future<Settings> _readSettings() async {
+    final settingsBox = await Hive.openBox<Settings>('DinoRun.SettingsBox');
+    final settings = settingsBox.get('DinoRun.Settings');
+
+    // If data is null, this is probably a fresh launch of the game.
+    if (settings == null) {
+      // In such cases store default values in hive.
+      await settingsBox.put(
+        'DinoRun.Settings',
+        Settings(bgm: true, sfx: true),
+      );
+    }
+
+    // Now it is safe to return the stored value.
+    return settingsBox.get('DinoRun.Settings')!;
+  }
 }

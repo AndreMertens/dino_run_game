@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '/game/dino_run.dart';
 import '/widgets/hud.dart';
+import 'settings_menu.dart';
 
 // This represents the main menu overlay.
 class MainMenu extends StatelessWidget {
@@ -54,7 +55,18 @@ class MainMenu extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // 91.
+                  ElevatedButton(
+                    onPressed: () {
+                      game.overlays.remove(MainMenu.id);
+                      game.overlays.add(SettingsMenu.id);
+                    },
+                    child: const Text(
+                      'Settings',
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

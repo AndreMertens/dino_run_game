@@ -7,10 +7,12 @@ import 'package:path_provider/path_provider.dart';
 
 import 'game/dino_run.dart';
 import 'models/player_data.dart';
+import 'models/settings.dart';
 import 'widgets/game_over_menu.dart';
 import 'widgets/hud.dart';
 import 'widgets/main_menu.dart';
 import 'widgets/pause_menu.dart';
+import 'widgets/settings_menu.dart';
 
 Future<void> main() async {
   // Ensures that all bindings are initialized
@@ -34,7 +36,7 @@ Future<void> initHive() async {
   }
 
   Hive.registerAdapter<PlayerData>(PlayerDataAdapter());
-  // 89.
+  Hive.registerAdapter<Settings>(SettingsAdapter());
 }
 
 // The main widget for this game.
@@ -74,7 +76,7 @@ class DinoRunApp extends StatelessWidget {
             GameOverMenu.id: (_, game) => GameOverMenu(game),
             MainMenu.id: (_, game) => MainMenu(game),
             PauseMenu.id: (_, game) => PauseMenu(game),
-            // 90.
+            SettingsMenu.id: (_, game) => SettingsMenu(game),
           },
           // By default MainMenu overlay will be active.
           initialActiveOverlays: const [MainMenu.id],

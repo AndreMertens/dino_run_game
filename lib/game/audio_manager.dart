@@ -1,9 +1,11 @@
 import 'package:flame_audio/flame_audio.dart';
 
+import '../models/settings.dart';
+
 // This class is the common interface between [DinoRun]
 // and [Flame] engine's audio APIs.
 class AudioManager {
-  // 78.
+  late Settings settings;
   AudioManager._internal();
 
   // [_instance] represents the single static instance of [AudioManager].
@@ -16,29 +18,32 @@ class AudioManager {
   // and initializing settings.
   Future<void> init(
     List<String> files,
-    // 79.
+    Settings settings,
   ) async {
-    // 80.
+    this.settings = settings;
     FlameAudio.bgm.initialize();
     await FlameAudio.audioCache.loadAll(files);
   }
 
   // Starts the given audio file as BGM on loop.
   void startBgm(String fileName) {
-    FlameAudio.bgm.play(fileName, volume: 0.4);
-    // 81.
+    if (settings.bgm) {
+      FlameAudio.bgm.play(fileName, volume: 0.4);
+    }
   }
 
   // Pauses currently playing BGM if any.
   void pauseBgm() {
-    FlameAudio.bgm.pause();
-    // 82.
+    if (settings.bgm) {
+      FlameAudio.bgm.pause();
+    }
   }
 
   // Resumes currently paused BGM if any.
   void resumeBgm() {
-    FlameAudio.bgm.resume();
-    // 83.
+    if (settings.bgm) {
+      FlameAudio.bgm.resume();
+    }
   }
 
   // Stops currently playing BGM if any.
@@ -48,7 +53,8 @@ class AudioManager {
 
   // Plays the given audio file once.
   void playSfx(String fileName) {
-    FlameAudio.play(fileName);
-    // 84.
+    if (settings.sfx) {
+      FlameAudio.play(fileName);
+    }
   }
 }
