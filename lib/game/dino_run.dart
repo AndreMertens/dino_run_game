@@ -1,3 +1,4 @@
+import 'package:dino_run_game/game/dino.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -24,7 +25,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
   // 60.
 
-  // 9.
+  late Dino _dino;
 
   // 20.
 
@@ -70,12 +71,17 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     // Add the parallax as the backdrop.
     camera.backdrop.add(parallaxBackground);
 
-    // 10.
+    startGamePlay();
 
     // 40.
   }
 
-  // 11.
+  void startGamePlay() {
+    _dino = Dino(images.fromCache('DinoSprites - tard.png'));
+    // 21.
+    world.add(_dino);
+    // 22.
+  }
 
   // 16.
 
