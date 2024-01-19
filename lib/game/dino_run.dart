@@ -1,5 +1,6 @@
 import 'package:dino_run_game/game/dino.dart';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
@@ -83,7 +84,13 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     // 22.
   }
 
-  // 16.
+  // This will get called for each tap on the screen.
+  @override
+  void onTapDown(TapDownInfo info) {
+    _dino.jump();
+    // 53.
+    super.onTapDown(info);
+  }
 
   // 41.
 

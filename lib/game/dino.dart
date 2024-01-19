@@ -50,7 +50,12 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
     ),
   };
 
-  // 12.
+  // The max distance from top of the screen beyond which
+  // dino should never go. Basically the screen height - ground height
+  double yMax = 0.0;
+  // Dino's current speed along y-axis.
+  double speedY = 0.0;
+  static const double gravity = 800;
 
   // 23.
 
@@ -64,14 +69,47 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
     // will be called even while restarting the game.
     _reset();
 
-    // 13.
+    yMax = y;
 
     // 24.
 
     super.onMount();
   }
 
-  // 14.
+  @override
+  void update(double dt) {
+    // v = u + at
+    speedY += gravity * dt;
+
+    // d = s0 + s * t
+    y += speedY * dt;
+
+    // This code makes sure that dino never goes beyond [yMax].
+    if (isOnGround) {
+      y = yMax;
+      speedY = 0.0;
+      if ((current != DinoAnimationStates.run)
+          // 25.
+          ) {
+        current = DinoAnimationStates.run;
+      }
+    }
+    // 26.
+    super.update(dt);
+  }
+
+  // Returns true if dino is on ground.
+  bool get isOnGround => (y >= yMax);
+
+  // Makes the dino jump.
+  void jump() {
+    // Jump only if dino is on ground.
+    if (isOnGround) {
+      speedY = -300;
+      current = DinoAnimationStates.idle;
+      // 63.
+    }
+  }
 
   // This method reset some of the important properties
   // of this component back to normal.
@@ -83,7 +121,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
     position = Vector2(32, game.virtualSize.y - 22);
     size = Vector2.all(24);
     current = DinoAnimationStates.run;
-    // 15.
+    speedY = 0.0;
     // 27.
   }
 
