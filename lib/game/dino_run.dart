@@ -6,6 +6,8 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 
+import 'enemy_manager.dart';
+
 // This is the main flame game class.
 class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
   DinoRun({super.camera});
@@ -28,7 +30,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
   late Dino _dino;
 
-  // 20.
+  late EnemyManager _enemyManager;
 
   // 38.
 
@@ -79,9 +81,9 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
   void startGamePlay() {
     _dino = Dino(images.fromCache('DinoSprites - tard.png'));
-    // 21.
+    _enemyManager = EnemyManager();
     world.add(_dino);
-    // 22.
+    world.add(_enemyManager);
   }
 
   // This will get called for each tap on the screen.
