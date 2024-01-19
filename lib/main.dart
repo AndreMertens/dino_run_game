@@ -10,6 +10,7 @@ import 'models/player_data.dart';
 import 'widgets/game_over_menu.dart';
 import 'widgets/hud.dart';
 import 'widgets/main_menu.dart';
+import 'widgets/pause_menu.dart';
 
 Future<void> main() async {
   // Ensures that all bindings are initialized
@@ -72,7 +73,7 @@ class DinoRunApp extends StatelessWidget {
             Hud.id: (_, game) => Hud(game),
             GameOverMenu.id: (_, game) => GameOverMenu(game),
             MainMenu.id: (_, game) => MainMenu(game),
-            // 56.
+            PauseMenu.id: (_, game) => PauseMenu(game),
             // 90.
           },
           // By default MainMenu overlay will be active.

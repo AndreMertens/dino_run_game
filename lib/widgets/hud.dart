@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '/game/dino_run.dart';
 import '/models/player_data.dart';
+import 'pause_menu.dart';
 
 // This represents the head up display in game.
 // It consists of, current score, high score,
@@ -48,7 +49,15 @@ class Hud extends StatelessWidget {
                 ),
               ],
             ),
-            // 57.
+            TextButton(
+              onPressed: () {
+                game.overlays.remove(Hud.id);
+                game.overlays.add(PauseMenu.id);
+                game.pauseEngine();
+                // 67.
+              },
+              child: const Icon(Icons.pause, color: Colors.white),
+            ),
             Selector<PlayerData, int>(
               selector: (_, playerData) => playerData.lives,
               builder: (_, lives, __) {
