@@ -1,4 +1,5 @@
 import 'package:dino_run_game/game/dino.dart';
+import 'package:dino_run_game/models/modus_settings.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
@@ -16,7 +17,9 @@ import 'enemy_manager.dart';
 
 // This is the main flame game class.
 class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
-  DinoRun({super.camera});
+  final ModusSettings modusSettings;
+
+  DinoRun({super.camera, required this.modusSettings});
 
   // List of all the image assets.
   static const _imageAssets = [
@@ -30,6 +33,8 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     'parallax/plx-4.png',
     'parallax/plx-5.png',
     'parallax/plx-6.png',
+    'Rock/Rock3_Run (22x18).png',
+    'BlueBird/Flying (32x32).png',
   ];
 
   // List of all the audio assets.
@@ -96,8 +101,18 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
   }
 
   void startGamePlay() {
-    _dino = Dino(images.fromCache('DinoSprites - tard.png'));
-    _enemyManager = EnemyManager();
+    _dino = Dino(
+        image: images.fromCache('DinoSprites - tard.png'),
+        modusSettings: modusSettings);
+
+    // Timer to decide when to spawn next enemy.
+    Timer _timer = Timer(2, repeat: true);
+
+    if (modusSettings.modus == ModusType.hard) {
+      _timer = Timer(1.5, repeat: true);
+    }
+
+    _enemyManager = EnemyManager(modusSettings: modusSettings, timer: _timer);
     world.add(_dino);
     world.add(_enemyManager);
   }

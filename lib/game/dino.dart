@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dino_run_game/models/modus_settings.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
@@ -63,9 +64,10 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   final Timer _hitTimer = Timer(1);
   bool isHit = false;
 
-  Dino(
-    Image image,
-  ) : super.fromFrameData(image, _animationMap);
+  final ModusSettings modusSettings;
+
+  Dino({required Image image, required this.modusSettings})
+      : super.fromFrameData(image, _animationMap);
 
   @override
   void onMount() {
@@ -121,7 +123,11 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   void jump() {
     // Jump only if dino is on ground.
     if (isOnGround && !isHit) {
-      speedY = -300;
+      if (modusSettings.modus == ModusType.easy) {
+        speedY = -400;
+      } else {
+        speedY = -300;
+      }
       current = DinoAnimationStates.idle;
       AudioManager.instance.playSfx('jump14.wav');
     }

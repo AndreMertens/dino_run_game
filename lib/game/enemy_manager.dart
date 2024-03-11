@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dino_run_game/models/modus_settings.dart';
 import 'package:flame/components.dart';
 
 import '/game/dino_run.dart';
@@ -15,11 +16,12 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
   // Random generator required for randomly selecting enemy type.
   final Random _random = Random();
 
-  // Timer to decide when to spawn next enemy.
-  final Timer _timer = Timer(2, repeat: true);
+  final Timer timer;
 
-  EnemyManager() {
-    _timer.onTick = spawnRandomEnemy;
+  final ModusSettings modusSettings;
+
+  EnemyManager({required this.modusSettings, required this.timer}) {
+    timer.onTick = spawnRandomEnemy;
   }
 
   // This method is responsible for spawning a random enemy.
@@ -27,6 +29,58 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
     /// Generate a random index within [_data] and get an [EnemyData].
     final randomIndex = _random.nextInt(_data.length);
     final enemyData = _data.elementAt(randomIndex);
+
+    switch (enemyData.type) {
+      case EnemyType.angryPig:
+        if (modusSettings.modus == ModusType.easy) {
+          enemyData.speedX = 90;
+        } else if (modusSettings.modus == ModusType.hard) {
+          enemyData.speedX = 70;
+        } else {
+          enemyData.speedX = 80;
+        }
+        break;
+      case EnemyType.bat:
+        if (modusSettings.modus == ModusType.easy) {
+          enemyData.speedX = 100;
+        } else if (modusSettings.modus == ModusType.hard) {
+          enemyData.speedX = 115;
+        } else {
+          enemyData.speedX = 110;
+        }
+        break;
+      case EnemyType.rino:
+        if (modusSettings.modus == ModusType.easy) {
+          enemyData.speedX = 130;
+        } else if (modusSettings.modus == ModusType.hard) {
+          enemyData.speedX = 180;
+        } else {
+          enemyData.speedX = 150;
+        }
+        break;
+      case EnemyType.rock:
+        if (modusSettings.modus == ModusType.easy) {
+          enemyData.speedX = 180;
+        } else if (modusSettings.modus == ModusType.hard) {
+          enemyData.speedX = 250;
+        } else {
+          enemyData.speedX = 200;
+        }
+        break;
+      case EnemyType.blueBird:
+        if (modusSettings.modus == ModusType.easy) {
+          enemyData.speedX = 100;
+        } else if (modusSettings.modus == ModusType.hard) {
+          enemyData.speedX = 300;
+        } else {
+          enemyData.speedX = 110;
+        }
+        break;
+      default:
+        enemyData.speedX = 80;
+        break;
+    }
+
     final enemy = Enemy(enemyData);
 
     // Help in setting all enemies on ground.
@@ -59,38 +113,54 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
       // As soon as this component is mounted, initialize all the data.
       _data.addAll([
         EnemyData(
+          type: EnemyType.angryPig,
           image: game.images.fromCache('AngryPig/Walk (36x30).png'),
           nFrames: 16,
           stepTime: 0.1,
           textureSize: Vector2(36, 30),
-          speedX: 80,
           canFly: false,
         ),
         EnemyData(
+          type: EnemyType.bat,
           image: game.images.fromCache('Bat/Flying (46x30).png'),
           nFrames: 7,
           stepTime: 0.1,
           textureSize: Vector2(46, 30),
-          speedX: 100,
           canFly: true,
         ),
         EnemyData(
+          type: EnemyType.rino,
           image: game.images.fromCache('Rino/Run (52x34).png'),
           nFrames: 6,
           stepTime: 0.09,
           textureSize: Vector2(52, 34),
-          speedX: 150,
           canFly: false,
         ),
+        EnemyData(
+          type: EnemyType.rock,
+          image: game.images.fromCache('Rock/Rock3_Run (22x18).png'),
+          nFrames: 14,
+          stepTime: 0.05,
+          textureSize: Vector2(22, 18),
+          canFly: false,
+        ),
+        EnemyData(
+          type: EnemyType.blueBird,
+          image: game.images.fromCache('BlueBird/Flying (32x32).png'),
+          nFrames: 9,
+          stepTime: 0.08,
+          textureSize: Vector2(32, 32),
+          canFly: true,
+        )
       ]);
     }
-    _timer.start();
+    timer.start();
     super.onMount();
   }
 
   @override
   void update(double dt) {
-    _timer.update(dt);
+    timer.update(dt);
     super.update(dt);
   }
 

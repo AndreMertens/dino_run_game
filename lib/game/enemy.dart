@@ -9,6 +9,7 @@ class Enemy extends SpriteAnimationComponent
     with CollisionCallbacks, HasGameReference<DinoRun> {
   // The data required for creation of this enemy.
   final EnemyData enemyData;
+  bool moveUp = true;
 
   Enemy(this.enemyData) {
     animation = SpriteAnimation.fromFrameData(
@@ -41,6 +42,19 @@ class Enemy extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
+    if (enemyData.type == EnemyType.bat) {
+      if (position.y >= 156) {
+        moveUp = true;
+      } else if (position.y <= 50) {
+        moveUp = false;
+      }
+      if (moveUp) {
+        position.y -= 1;
+      } else {
+        position.y += 1;
+      }
+    }
+
     position.x -= enemyData.speedX * dt;
 
     // Remove the enemy and increase player score

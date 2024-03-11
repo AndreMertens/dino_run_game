@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dino_run_game/widgets/modus_menu.dart';
 import 'package:flutter/material.dart';
 
 import '/game/dino_run.dart';
@@ -55,6 +56,14 @@ class MainMenu extends StatelessWidget {
                       ),
                     ),
                   ),
+                  ElevatedButton(onPressed: (){
+                      game.overlays.remove(MainMenu.id);
+                      game.overlays.add(ModusMenu.id);
+                  } , child: const Text(
+                    'Modus',
+                    style: TextStyle(
+                      fontSize: 30
+                    ),),),
                   ElevatedButton(
                     onPressed: () {
                       game.overlays.remove(MainMenu.id);

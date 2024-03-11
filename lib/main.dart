@@ -1,9 +1,12 @@
+import 'package:dino_run_game/models/modus_settings.dart';
+import 'package:dino_run_game/widgets/modus_menu.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'game/dino_run.dart';
 import 'models/player_data.dart';
@@ -23,7 +26,11 @@ Future<void> main() async {
   // Initializes hive and register the adapters.
   await initHive();
 
-  runApp(const DinoRunApp());
+  final ModusSettings modusSettings = ModusSettings();
+
+  runApp(MultiProvider(providers: [
+    Provider(create: (context) => modusSettings),
+  ], child: DinoRunApp(modusSettings: modusSettings)));
 }
 
 // This function will initialize hive with apps documents directory.
@@ -41,7 +48,9 @@ Future<void> initHive() async {
 
 // The main widget for this game.
 class DinoRunApp extends StatelessWidget {
-  const DinoRunApp({Key? key}) : super(key: key);
+  final ModusSettings modusSettings;
+
+  const DinoRunApp({super.key, required this.modusSettings});
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +86,7 @@ class DinoRunApp extends StatelessWidget {
             MainMenu.id: (_, game) => MainMenu(game),
             PauseMenu.id: (_, game) => PauseMenu(game),
             SettingsMenu.id: (_, game) => SettingsMenu(game),
+            ModusMenu.id: (_, game) => ModusMenu(game),
           },
           // By default MainMenu overlay will be active.
           initialActiveOverlays: const [MainMenu.id],
@@ -87,6 +97,7 @@ class DinoRunApp extends StatelessWidget {
               width: 360,
               height: 180,
             ),
+            modusSettings: modusSettings,
           ),
         ),
       ),
