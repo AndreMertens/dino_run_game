@@ -23,64 +23,83 @@ class ModusMenu extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           color: Colors.black.withAlpha(100),
           child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 100),
-                  child: Wrap(
-                      direction: Axis.vertical,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: 10,
-                      children: [
-                        const Text(
-                          'Modus',
-                          style: TextStyle(
-                            fontSize: 50,
-                            color: Colors.white,
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Provider.of<ModusSettings>(context, listen: false)
-                                .modus = ModusType.easy;
-                            game.overlays.remove(ModusMenu.id);
-                            game.overlays.add(MainMenu.id);
-                          },
-                          child: const Text(
-                            'Easy',
-                            style: TextStyle(
-                              fontSize: 30,
-                            ),
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Provider.of<ModusSettings>(context, listen: false)
-                                .modus = ModusType.middle;
-                            game.overlays.remove(ModusMenu.id);
-                            game.overlays.add(MainMenu.id);
-                          },
-                          child: const Text(
-                            'Middle',
-                            style: TextStyle(
-                              fontSize: 30,
-                            ),
-                          ),
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              Provider.of<ModusSettings>(context, listen: false)
-                                  .modus = ModusType.hard;
-                              game.overlays.remove(ModusMenu.id);
-                              game.overlays.add(MainMenu.id);
-                            },
-                            child: const Text(
-                              'Hard',
-                              style: TextStyle(
-                                fontSize: 30,
-                              ),
-                            )),
-                      ]))),
+            fit: BoxFit.scaleDown,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20, horizontal: 100),
+              child: Wrap(
+                direction: Axis.vertical,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 10,
+                children: [
+                  const Text(
+                    'Modus',
+                    style: TextStyle(
+                      fontSize: 50,
+                      color: Colors.white,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Provider.of<ModusSettings>(context, listen: false).modus =
+                          ModusType.easy;
+                      game.overlays.remove(ModusMenu.id);
+                      game.overlays.add(MainMenu.id);
+                    },
+                    child: const Text(
+                      'Easy',
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Provider.of<ModusSettings>(context, listen: false).modus =
+                          ModusType.middle;
+                      game.overlays.remove(ModusMenu.id);
+                      game.overlays.add(MainMenu.id);
+                    },
+                    child: const Text(
+                      'Middle',
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Provider.of<ModusSettings>(context, listen: false).modus =
+                          ModusType.hard;
+                      game.overlays.remove(ModusMenu.id);
+                      game.overlays.add(MainMenu.id);
+                    },
+                    child: const Text(
+                      'Hard',
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Provider.of<ModusSettings>(context, listen: false).modus =
+                          ModusType.nightmare;
+                      game.overlays.remove(ModusMenu.id);
+                      game.overlays.add(MainMenu.id);
+                    },
+                    child: const Text(
+                      'Nightmare',
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

@@ -33,8 +33,18 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     'parallax/plx-4.png',
     'parallax/plx-5.png',
     'parallax/plx-6.png',
+    'parallax/plx-7.png',
+    'parallax/plx-8.png',
+    'parallax/plx-9.png',
+    'parallax/plx-10.png',
+    'parallax/plx-11.png',
+    'parallax/plx-12.png',
     'Rock/Rock3_Run (22x18).png',
     'BlueBird/Flying (32x32).png',
+    'Skeleton/Walk (150x150).png',
+    'Goblin/Run (150x150).png',
+    'FlyingTrunk/Flight (150x150).png',
+    'Mushroom/Run (150x150).png',
   ];
 
   // List of all the audio assets.
@@ -81,20 +91,36 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
     // This makes the camera look at the center of the viewport.
     camera.viewfinder.position = camera.viewport.virtualSize * 0.5;
+    ParallaxComponent parallaxBackground = ParallaxComponent();
 
     /// Create a [ParallaxComponent] and add it to game.
-    final parallaxBackground = await loadParallaxComponent(
-      [
-        ParallaxImageData('parallax/plx-1.png'),
-        ParallaxImageData('parallax/plx-2.png'),
-        ParallaxImageData('parallax/plx-3.png'),
-        ParallaxImageData('parallax/plx-4.png'),
-        ParallaxImageData('parallax/plx-5.png'),
-        ParallaxImageData('parallax/plx-6.png'),
-      ],
-      baseVelocity: Vector2(10, 0),
-      velocityMultiplierDelta: Vector2(1.4, 0),
-    );
+    if (modusSettings.modus != ModusType.nightmare) {
+      parallaxBackground = await loadParallaxComponent(
+        [
+          ParallaxImageData('parallax/plx-1.png'),
+          ParallaxImageData('parallax/plx-2.png'),
+          ParallaxImageData('parallax/plx-3.png'),
+          ParallaxImageData('parallax/plx-4.png'),
+          ParallaxImageData('parallax/plx-5.png'),
+          ParallaxImageData('parallax/plx-6.png'),
+        ],
+        baseVelocity: Vector2(10, 0),
+        velocityMultiplierDelta: Vector2(1.4, 0),
+      );
+    } else {
+      parallaxBackground = await loadParallaxComponent(
+        [
+          ParallaxImageData('parallax/plx-7.png'),
+          ParallaxImageData('parallax/plx-8.png'),
+          ParallaxImageData('parallax/plx-9.png'),
+          ParallaxImageData('parallax/plx-10.png'),
+          ParallaxImageData('parallax/plx-11.png'),
+          ParallaxImageData('parallax/plx-12.png'),
+        ],
+        baseVelocity: Vector2(10, 0),
+        velocityMultiplierDelta: Vector2(1.4, 0),
+      );
+    }
 
     // Add the parallax as the backdrop.
     camera.backdrop.add(parallaxBackground);
@@ -110,6 +136,9 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
     if (modusSettings.modus == ModusType.hard) {
       _timer = Timer(1.5, repeat: true);
+    }
+    if (modusSettings.modus == ModusType.nightmare) {
+      _timer = Timer(0.75, repeat: true);
     }
 
     _enemyManager = EnemyManager(modusSettings: modusSettings, timer: _timer);

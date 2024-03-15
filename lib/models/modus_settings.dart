@@ -1,4 +1,4 @@
-enum ModusType { easy, middle, hard }
+enum ModusType { easy, middle, hard, nightmare }
 
 class ModusSettings {
   ModusType _modus = ModusType.middle;

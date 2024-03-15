@@ -24,18 +24,40 @@ class Enemy extends SpriteAnimationComponent
 
   @override
   void onMount() {
-    // Reduce the size of enemy as they look too
-    // big compared to the dino.
-    size *= 0.6;
-
     // Add a hitbox for this enemy.
-    add(
-      RectangleHitbox.relative(
-        Vector2.all(0.8),
-        parentSize: size,
-        position: Vector2(size.x * 0.2, size.y * 0.2) / 2,
-      ),
-    );
+    if (enemyData.type == EnemyType.goblin ||
+        enemyData.type == EnemyType.mushroom ||
+        enemyData.type == EnemyType.flyingTrunk ||
+        enemyData.type == EnemyType.skeleton) {
+      // Reduce the size of enemy as they look too
+      // big compared to the dino.
+      size *= 0.6;
+      add(
+        RectangleHitbox.relative(
+          Vector2.all(0.6),
+          parentSize: size,
+          position: Vector2(size.x * 0.2, size.y * 0.2) / 2,
+        ),
+      );
+    } else {
+      // Reduce the size of enemy as they look too
+      // big compared to the dino.
+      size *= 0.6;
+      add(
+        RectangleHitbox.relative(
+          Vector2.all(0.8),
+          parentSize: size,
+          position: Vector2(size.x * 0.2, size.y * 0.2) / 2,
+        ),
+      );
+    }
+
+    if (enemyData.type == EnemyType.goblin ||
+        enemyData.type == EnemyType.mushroom ||
+        enemyData.type == EnemyType.flyingTrunk ||
+        enemyData.type == EnemyType.skeleton) {
+      flipHorizontallyAroundCenter();
+    }
 
     super.onMount();
   }

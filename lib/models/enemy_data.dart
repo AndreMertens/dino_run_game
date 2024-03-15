@@ -1,6 +1,16 @@
 import 'package:flame/extensions.dart';
 
-enum EnemyType { angryPig, bat, rino, rock, blueBird }
+enum EnemyType {
+  angryPig,
+  bat,
+  rino,
+  rock,
+  blueBird,
+  skeleton,
+  goblin,
+  mushroom,
+  flyingTrunk
+}
 
 // This class stores all the data
 // necessary for creation of an enemy.
