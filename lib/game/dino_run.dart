@@ -112,37 +112,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     camera.backdrop.add(parallaxBackground);
   }
 
-  void startGamePlay() async {
-    if (modusSettings.modus != ModusType.nightmare) {
-      parallaxBackground = await loadParallaxComponent(
-        [
-          ParallaxImageData('parallax/plx-1.png'),
-          ParallaxImageData('parallax/plx-2.png'),
-          ParallaxImageData('parallax/plx-3.png'),
-          ParallaxImageData('parallax/plx-4.png'),
-          ParallaxImageData('parallax/plx-5.png'),
-          ParallaxImageData('parallax/plx-6.png'),
-        ],
-        baseVelocity: Vector2(10, 0),
-        velocityMultiplierDelta: Vector2(1.4, 0),
-      );
-    } else {
-      parallaxBackground = await loadParallaxComponent(
-        [
-          ParallaxImageData('parallax/plx-7.png'),
-          ParallaxImageData('parallax/plx-8.png'),
-          ParallaxImageData('parallax/plx-9.png'),
-          ParallaxImageData('parallax/plx-10.png'),
-          ParallaxImageData('parallax/plx-11.png'),
-          ParallaxImageData('parallax/plx-12.png'),
-        ],
-        baseVelocity: Vector2(10, 0),
-        velocityMultiplierDelta: Vector2(1.4, 0),
-      );
-    }
-
-    camera.backdrop.add(parallaxBackground);
-
+  void startGamePlay() {
     _dino = Dino(
         image: images.fromCache('DinoSprites - tard.png'),
         modusSettings: modusSettings);
@@ -235,5 +205,37 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
     // Now it is safe to return the stored value.
     return settingsBox.get('DinoRun.Settings')!;
+  }
+
+  void changeBackground() async {
+    if (modusSettings.modus != ModusType.nightmare) {
+      parallaxBackground = await loadParallaxComponent(
+        [
+          ParallaxImageData('parallax/plx-1.png'),
+          ParallaxImageData('parallax/plx-2.png'),
+          ParallaxImageData('parallax/plx-3.png'),
+          ParallaxImageData('parallax/plx-4.png'),
+          ParallaxImageData('parallax/plx-5.png'),
+          ParallaxImageData('parallax/plx-6.png'),
+        ],
+        baseVelocity: Vector2(10, 0),
+        velocityMultiplierDelta: Vector2(1.4, 0),
+      );
+    } else {
+      parallaxBackground = await loadParallaxComponent(
+        [
+          ParallaxImageData('parallax/plx-7.png'),
+          ParallaxImageData('parallax/plx-8.png'),
+          ParallaxImageData('parallax/plx-9.png'),
+          ParallaxImageData('parallax/plx-10.png'),
+          ParallaxImageData('parallax/plx-11.png'),
+          ParallaxImageData('parallax/plx-12.png'),
+        ],
+        baseVelocity: Vector2(10, 0),
+        velocityMultiplierDelta: Vector2(1.4, 0),
+      );
+    }
+
+    camera.backdrop.add(parallaxBackground);
   }
 }

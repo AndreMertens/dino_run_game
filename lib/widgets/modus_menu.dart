@@ -43,6 +43,7 @@ class ModusMenu extends StatelessWidget {
                     onPressed: () {
                       Provider.of<ModusSettings>(context, listen: false).modus =
                           ModusType.easy;
+                      game.changeBackground();
                       game.overlays.remove(ModusMenu.id);
                       game.overlays.add(MainMenu.id);
                     },
@@ -57,6 +58,7 @@ class ModusMenu extends StatelessWidget {
                     onPressed: () {
                       Provider.of<ModusSettings>(context, listen: false).modus =
                           ModusType.middle;
+                      game.changeBackground();
                       game.overlays.remove(ModusMenu.id);
                       game.overlays.add(MainMenu.id);
                     },
@@ -71,6 +73,7 @@ class ModusMenu extends StatelessWidget {
                     onPressed: () {
                       Provider.of<ModusSettings>(context, listen: false).modus =
                           ModusType.hard;
+                      game.changeBackground();
                       game.overlays.remove(ModusMenu.id);
                       game.overlays.add(MainMenu.id);
                     },
@@ -85,6 +88,7 @@ class ModusMenu extends StatelessWidget {
                     onPressed: () {
                       Provider.of<ModusSettings>(context, listen: false).modus =
                           ModusType.nightmare;
+                      game.changeBackground();
                       game.overlays.remove(ModusMenu.id);
                       game.overlays.add(MainMenu.id);
                     },
