@@ -71,6 +71,8 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
 
   @override
   void onMount() {
+    //debugMode = true;
+
     // First reset all the important properties, because onMount()
     // will be called even while restarting the game.
     _reset();

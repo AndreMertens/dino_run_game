@@ -132,18 +132,18 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
       previousEnemyIndex = randomIndex;
 
       switch (enemyData.type) {
-        // case EnemyType.skeleton:
-        //   enemyData.speedX = 160;
-        //   break;
-        // case EnemyType.flyingTrunk:
-        //   enemyData.speedX = 220;
-        //   break;
-        // case EnemyType.mushroom:
-        //   enemyData.speedX = 300;
-        //   break;
-        // case EnemyType.goblin:
-        //   enemyData.speedX = 400;
-        //   break;
+        case EnemyType.skeleton:
+          enemyData.speedX = 160;
+          break;
+        case EnemyType.flyingTrunk:
+          enemyData.speedX = 220;
+          break;
+        case EnemyType.mushroom:
+          enemyData.speedX = 300;
+          break;
+        case EnemyType.goblin:
+          enemyData.speedX = 400;
+          break;
         default:
           enemyData.speedX = 80;
           break;
