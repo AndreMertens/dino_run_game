@@ -62,6 +62,8 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
   late Settings settings;
 
+  ParallaxComponent parallaxBackground = ParallaxComponent();
+
   Vector2 get virtualSize => camera.viewport.virtualSize;
 
   // This method get called while flame is preparing this game.
@@ -91,9 +93,26 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
     // This makes the camera look at the center of the viewport.
     camera.viewfinder.position = camera.viewport.virtualSize * 0.5;
-    ParallaxComponent parallaxBackground = ParallaxComponent();
 
     /// Create a [ParallaxComponent] and add it to game.
+    parallaxBackground = await loadParallaxComponent(
+      [
+        ParallaxImageData('parallax/plx-1.png'),
+        ParallaxImageData('parallax/plx-2.png'),
+        ParallaxImageData('parallax/plx-3.png'),
+        ParallaxImageData('parallax/plx-4.png'),
+        ParallaxImageData('parallax/plx-5.png'),
+        ParallaxImageData('parallax/plx-6.png'),
+      ],
+      baseVelocity: Vector2(10, 0),
+      velocityMultiplierDelta: Vector2(1.4, 0),
+    );
+
+    // Add the parallax as the backdrop.
+    camera.backdrop.add(parallaxBackground);
+  }
+
+  void startGamePlay() async {
     if (modusSettings.modus != ModusType.nightmare) {
       parallaxBackground = await loadParallaxComponent(
         [
@@ -122,11 +141,8 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
       );
     }
 
-    // Add the parallax as the backdrop.
     camera.backdrop.add(parallaxBackground);
-  }
 
-  void startGamePlay() {
     _dino = Dino(
         image: images.fromCache('DinoSprites - tard.png'),
         modusSettings: modusSettings);
@@ -138,7 +154,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
       _timer = Timer(1.5, repeat: true);
     }
     if (modusSettings.modus == ModusType.nightmare) {
-      _timer = Timer(0.75, repeat: true);
+      _timer = Timer(2, repeat: true);
     }
 
     _enemyManager = EnemyManager(modusSettings: modusSettings, timer: _timer);
