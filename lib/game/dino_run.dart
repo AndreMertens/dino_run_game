@@ -124,7 +124,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
       _timer = Timer(1.5, repeat: true);
     }
     if (modusSettings.modus == ModusType.nightmare) {
-      _timer = Timer(2, repeat: true);
+      _timer = Timer(1, repeat: true);
     }
 
     _enemyManager = EnemyManager(modusSettings: modusSettings, timer: _timer);

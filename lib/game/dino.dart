@@ -128,7 +128,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
       if (modusSettings.modus == ModusType.easy) {
         speedY = -400;
       } else {
-        speedY = -400;
+        speedY = -300;
       }
       current = DinoAnimationStates.idle;
       AudioManager.instance.playSfx('jump14.wav');
