@@ -25,30 +25,30 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
     DinoAnimationStates.idle: SpriteAnimationData.sequenced(
       amount: 4,
       stepTime: 0.1,
-      textureSize: Vector2.all(24),
+      textureSize: Vector2(24, 35),
     ),
     DinoAnimationStates.run: SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,
-      textureSize: Vector2.all(24),
+      textureSize: Vector2(24, 35),
       texturePosition: Vector2((4) * 24, 0),
     ),
     DinoAnimationStates.kick: SpriteAnimationData.sequenced(
       amount: 4,
       stepTime: 0.1,
-      textureSize: Vector2.all(24),
+      textureSize: Vector2(24, 35),
       texturePosition: Vector2((4 + 6) * 24, 0),
     ),
     DinoAnimationStates.hit: SpriteAnimationData.sequenced(
       amount: 3,
       stepTime: 0.1,
-      textureSize: Vector2.all(24),
+      textureSize: Vector2(24, 35),
       texturePosition: Vector2((4 + 6 + 4) * 24, 0),
     ),
     DinoAnimationStates.sprint: SpriteAnimationData.sequenced(
       amount: 7,
       stepTime: 0.1,
-      textureSize: Vector2.all(24),
+      textureSize: Vector2(24, 35),
       texturePosition: Vector2((4 + 6 + 4 + 3) * 24, 0),
     ),
   };
@@ -142,7 +142,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
       removeFromParent();
     }
     anchor = Anchor.bottomLeft;
-    position = Vector2(32, game.virtualSize.y - 22);
+    position = Vector2(32, game.virtualSize.y - 18);
     size = Vector2.all(24);
     current = DinoAnimationStates.run;
     speedY = 0.0;

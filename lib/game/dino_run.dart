@@ -23,7 +23,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
   // List of all the image assets.
   static const _imageAssets = [
-    'DinoSprites - tard.png',
+    'FrappDinoSprites-tard.png',
     'AngryPig/Walk (36x30).png',
     'Bat/Flying (46x30).png',
     'Rino/Run (52x34).png',
@@ -110,7 +110,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
   void startGamePlay() {
     _dino = Dino(
-        image: images.fromCache('DinoSprites - tard.png'),
+        image: images.fromCache('FrappDinoSprites-tard.png'),
         modusSettings: modusSettings);
 
     // Timer to decide when to spawn next enemy.
