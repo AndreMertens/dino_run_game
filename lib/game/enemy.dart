@@ -3,15 +3,17 @@ import 'package:flame/components.dart';
 
 import '/game/dino_run.dart';
 import '/models/enemy_data.dart';
+import '../models/modus_settings.dart';
 
 // This represents an enemy in the game world.
 class Enemy extends SpriteAnimationComponent
     with CollisionCallbacks, HasGameReference<DinoRun> {
   // The data required for creation of this enemy.
   final EnemyData enemyData;
+  final ModusSettings modusSettings;
   bool moveUp = true;
 
-  Enemy(this.enemyData) {
+  Enemy(this.enemyData, this.modusSettings) {
     animation = SpriteAnimation.fromFrameData(
       enemyData.image,
       SpriteAnimationData.sequenced(
@@ -61,8 +63,15 @@ class Enemy extends SpriteAnimationComponent
     // by 1, if enemy has gone past left end of the screen.
     if (position.x < -enemyData.textureSize.x) {
       removeFromParent();
-
-      game.playerData.currentScore += 1;
+      if (modusSettings.modus == ModusType.easy) {
+        game.playerData.currentScore += 1;
+      } else if (modusSettings.modus == ModusType.medium) {
+        game.playerData.currentScore += 3;
+      } else if (modusSettings.modus == ModusType.hard) {
+        game.playerData.currentScore += 5;
+      } else {
+        game.playerData.currentScore += 1;
+      }
     }
 
     super.update(dt);

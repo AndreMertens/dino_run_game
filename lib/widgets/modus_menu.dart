@@ -57,13 +57,13 @@ class ModusMenu extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       Provider.of<ModusSettings>(context, listen: false).modus =
-                          ModusType.middle;
+                          ModusType.medium;
                       game.changeBackground();
                       game.overlays.remove(ModusMenu.id);
                       game.overlays.add(MainMenu.id);
                     },
                     child: const Text(
-                      'Middle',
+                      'Medium',
                       style: TextStyle(
                         fontSize: 30,
                       ),
