@@ -6,10 +6,6 @@ enum EnemyType {
   rino,
   rock,
   blueBird,
-  skeleton,
-  goblin,
-  mushroom,
-  flyingTrunk
 }
 
 // This class stores all the data

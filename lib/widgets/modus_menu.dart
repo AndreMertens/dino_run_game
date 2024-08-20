@@ -84,22 +84,6 @@ class ModusMenu extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Provider.of<ModusSettings>(context, listen: false).modus =
-                          ModusType.nightmare;
-                      game.changeBackground();
-                      game.overlays.remove(ModusMenu.id);
-                      game.overlays.add(MainMenu.id);
-                    },
-                    child: const Text(
-                      'Nightmare',
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),

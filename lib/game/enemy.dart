@@ -27,31 +27,15 @@ class Enemy extends SpriteAnimationComponent
     //debugMode = true;
 
     // Add a hitbox for this enemy.
-    if (enemyData.type == EnemyType.goblin ||
-        enemyData.type == EnemyType.mushroom ||
-        enemyData.type == EnemyType.flyingTrunk ||
-        enemyData.type == EnemyType.skeleton) {
-      // Reduce the size of enemy as they look too
-      // big compared to the dino.
-      size *= 0.6;
+    // Reduce the size of enemy as they look too
+    // big compared to the dino.
+    size *= 0.6;
 
-      add(RectangleHitbox.relative(
-        Vector2(0.2, 0.2),
-        parentSize: size,
-        position: Vector2(size.x * 0.8, size.y * 0.8) / 2,
-      ));
-      flipHorizontallyAroundCenter();
-    } else {
-      // Reduce the size of enemy as they look too
-      // big compared to the dino.
-      size *= 0.6;
-
-      add(RectangleHitbox.relative(
-        Vector2.all(0.8),
-        parentSize: size,
-        position: Vector2(size.x * 0.2, size.y * 0.2) / 2,
-      ));
-    }
+    add(RectangleHitbox.relative(
+      Vector2.all(0.8),
+      parentSize: size,
+      position: Vector2(size.x * 0.2, size.y * 0.2) / 2,
+    ));
 
     super.onMount();
   }
