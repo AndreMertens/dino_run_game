@@ -37,7 +37,7 @@ class MainMenu extends StatelessWidget {
                 spacing: 10,
                 children: [
                   const Text(
-                    'Dino Run',
+                    'Frappventure',
                     style: TextStyle(
                       fontSize: 50,
                       color: Colors.white,
@@ -56,14 +56,16 @@ class MainMenu extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ElevatedButton(onPressed: (){
+                  ElevatedButton(
+                    onPressed: () {
                       game.overlays.remove(MainMenu.id);
                       game.overlays.add(ModusMenu.id);
-                  } , child: const Text(
-                    'Modus',
-                    style: TextStyle(
-                      fontSize: 30
-                    ),),),
+                    },
+                    child: const Text(
+                      'Modus',
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  ),
                   ElevatedButton(
                     onPressed: () {
                       game.overlays.remove(MainMenu.id);
