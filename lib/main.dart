@@ -94,8 +94,8 @@ class DinoRunApp extends StatelessWidget {
             // Use a fixed resolution camera to avoid manually
             // scaling and handling different screen sizes.
             camera: CameraComponent.withFixedResolution(
-              width: 360,
-              height: 180,
+              width: 88,
+              height: 150,
             ),
             modusSettings: modusSettings,
           ),
