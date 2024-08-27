@@ -13,6 +13,7 @@ enum EnemyType {
 class EnemyData {
   final EnemyType type;
   final Image image;
+  final Image hitImage;
   final int nFrames;
   final double stepTime;
   final Vector2 textureSize;
@@ -21,6 +22,7 @@ class EnemyData {
   EnemyData({
     required this.type,
     required this.image,
+    required this.hitImage,
     required this.nFrames,
     required this.stepTime,
     required this.textureSize,

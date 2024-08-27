@@ -24,6 +24,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
   // List of all the image assets.
   static const _imageAssets = [
     'FrappDinoSprites-tard.png',
+    'Disappearing (96x96).png',
     'AngryPig/Walk (36x30).png',
     'Bat/Flying (46x30).png',
     'Rino/Run (52x34).png',
@@ -48,6 +49,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     '8BitPlatformerLoop.wav',
     'hurt7.wav',
     'jump14.wav',
+    'bounce.wav',
   ];
 
   late Dino _dino;

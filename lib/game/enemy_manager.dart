@@ -46,60 +46,60 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
     switch (enemyData.type) {
       case EnemyType.angryPig:
         if (modusSettings.modus == ModusType.easy) {
-          enemyData.speedX = 90;
+          enemyData.speedX = 50;
         } else if (modusSettings.modus == ModusType.medium) {
-          enemyData.speedX = 80;
+          enemyData.speedX = 100;
         } else if (modusSettings.modus == ModusType.hard) {
-          enemyData.speedX = 80;
+          enemyData.speedX = 150;
         } else {
-          enemyData.speedX = 80;
+          enemyData.speedX = 50;
         }
         break;
       case EnemyType.bat:
         if (modusSettings.modus == ModusType.easy) {
-          enemyData.speedX = 100;
+          enemyData.speedX = 60;
         } else if (modusSettings.modus == ModusType.medium) {
           enemyData.speedX = 110;
         } else if (modusSettings.modus == ModusType.hard) {
-          enemyData.speedX = 120;
+          enemyData.speedX = 160;
         } else {
-          enemyData.speedX = 110;
+          enemyData.speedX = 60;
         }
         break;
       case EnemyType.rino:
         if (modusSettings.modus == ModusType.easy) {
-          enemyData.speedX = 150;
+          enemyData.speedX = 100;
         } else if (modusSettings.modus == ModusType.medium) {
-          enemyData.speedX = 250;
+          enemyData.speedX = 150;
         } else if (modusSettings.modus == ModusType.hard) {
-          enemyData.speedX = 300;
+          enemyData.speedX = 200;
         } else {
-          enemyData.speedX = 130;
+          enemyData.speedX = 100;
         }
         break;
       case EnemyType.rock:
         if (modusSettings.modus == ModusType.easy) {
-          enemyData.speedX = 180;
+          enemyData.speedX = 90;
         } else if (modusSettings.modus == ModusType.medium) {
-          enemyData.speedX = 200;
+          enemyData.speedX = 140;
         } else if (modusSettings.modus == ModusType.hard) {
-          enemyData.speedX = 220;
+          enemyData.speedX = 190;
         } else {
-          enemyData.speedX = 180;
+          enemyData.speedX = 40;
         }
         break;
       case EnemyType.blueBird:
         if (modusSettings.modus == ModusType.easy) {
-          enemyData.speedX = 100;
+          enemyData.speedX = 50;
         } else if (modusSettings.modus == ModusType.medium) {
-          enemyData.speedX = 150;
-        } else if (modusSettings.modus == ModusType.hard) {
-          enemyData.speedX = 200;
-        } else {
           enemyData.speedX = 100;
+        } else if (modusSettings.modus == ModusType.hard) {
+          enemyData.speedX = 150;
+        } else {
+          enemyData.speedX = 40;
         }
       default:
-        enemyData.speedX = 80;
+        enemyData.speedX = 50;
         break;
     }
 
@@ -109,7 +109,7 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
     enemy.anchor = Anchor.bottomLeft;
     enemy.position = Vector2(
       game.virtualSize.x + 32,
-      game.virtualSize.y - 24,
+      game.virtualSize.y - 20,
     );
 
     // If this enemy can fly, set its y position randomly.
@@ -137,6 +137,7 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
         EnemyData(
           type: EnemyType.angryPig,
           image: game.images.fromCache('AngryPig/Walk (36x30).png'),
+          hitImage: game.images.fromCache('Disappearing (96x96).png'),
           nFrames: 16,
           stepTime: 0.1,
           textureSize: Vector2(36, 30),
@@ -145,6 +146,7 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
         EnemyData(
           type: EnemyType.bat,
           image: game.images.fromCache('Bat/Flying (46x30).png'),
+          hitImage: game.images.fromCache('Disappearing (96x96).png'),
           nFrames: 7,
           stepTime: 0.1,
           textureSize: Vector2(46, 30),
@@ -153,6 +155,7 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
         EnemyData(
           type: EnemyType.rino,
           image: game.images.fromCache('Rino/Run (52x34).png'),
+          hitImage: game.images.fromCache('Disappearing (96x96).png'),
           nFrames: 6,
           stepTime: 0.09,
           textureSize: Vector2(52, 34),
@@ -161,6 +164,7 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
         EnemyData(
           type: EnemyType.rock,
           image: game.images.fromCache('Rock/Rock3_Run (22x18).png'),
+          hitImage: game.images.fromCache('Disappearing (96x96).png'),
           nFrames: 14,
           stepTime: 0.05,
           textureSize: Vector2(22, 18),
@@ -169,6 +173,7 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
         EnemyData(
           type: EnemyType.blueBird,
           image: game.images.fromCache('BlueBird/Flying (32x32).png'),
+          hitImage: game.images.fromCache('Disappearing (96x96).png'),
           nFrames: 9,
           stepTime: 0.08,
           textureSize: Vector2(32, 32),

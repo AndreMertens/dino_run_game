@@ -125,11 +125,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   void jump() {
     // Jump only if dino is on ground.
     if (isOnGround && !isHit) {
-      if (modusSettings.modus == ModusType.easy) {
-        speedY = -400;
-      } else {
-        speedY = -300;
-      }
+      speedY = -300;
       current = DinoAnimationStates.idle;
       AudioManager.instance.playSfx('jump14.wav');
     }
@@ -142,7 +138,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
       removeFromParent();
     }
     anchor = Anchor.bottomLeft;
-    position = Vector2(32, game.virtualSize.y - 18);
+    position = Vector2(0, game.virtualSize.y - 14);
     size = Vector2.all(24);
     current = DinoAnimationStates.run;
     speedY = 0.0;
@@ -152,9 +148,12 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   // Gets called when dino collides with other Collidables.
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    // Call hit only if other component is an Enemy and dino
-    // is not already in hit state.
-    if ((other is Enemy) && (!isHit)) {
+    if ((other is Enemy) && (position.y < other.position.y)) {
+      other.hit();
+      speedY = -150;
+    } else if ((other is Enemy) && (!isHit)) {
+      // Call hit only if other component is an Enemy and dino
+      // is not already in hit state.
       hit();
     }
     super.onCollision(intersectionPoints, other);

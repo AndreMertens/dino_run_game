@@ -1,3 +1,4 @@
+import 'package:dino_run_game/game/audio_manager.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
@@ -5,16 +6,20 @@ import '/game/dino_run.dart';
 import '/models/enemy_data.dart';
 import '../models/modus_settings.dart';
 
+enum State { run, hit }
+
 // This represents an enemy in the game world.
-class Enemy extends SpriteAnimationComponent
+class Enemy extends SpriteAnimationGroupComponent
     with CollisionCallbacks, HasGameReference<DinoRun> {
   // The data required for creation of this enemy.
   final EnemyData enemyData;
   final ModusSettings modusSettings;
   bool moveUp = true;
+  late final SpriteAnimation runAnimation;
+  late final SpriteAnimation hitAnimation;
 
   Enemy(this.enemyData, this.modusSettings) {
-    animation = SpriteAnimation.fromFrameData(
+    runAnimation = SpriteAnimation.fromFrameData(
       enemyData.image,
       SpriteAnimationData.sequenced(
         amount: enemyData.nFrames,
@@ -22,6 +27,20 @@ class Enemy extends SpriteAnimationComponent
         textureSize: enemyData.textureSize,
       ),
     );
+    hitAnimation = SpriteAnimation.fromFrameData(
+        enemyData.hitImage,
+        SpriteAnimationData.sequenced(
+          amount: 7,
+          stepTime: enemyData.stepTime,
+          textureSize: Vector2.all(96),
+          loop: false,
+        ));
+
+    animations = {
+      State.run: runAnimation,
+      State.hit: hitAnimation,
+    };
+    current = State.run;
   }
 
   @override
@@ -45,7 +64,7 @@ class Enemy extends SpriteAnimationComponent
   @override
   void update(double dt) {
     if (enemyData.type == EnemyType.bat) {
-      if (position.y >= 156) {
+      if (position.y >= 130) {
         moveUp = true;
       } else if (position.y <= 50) {
         moveUp = false;
@@ -75,5 +94,12 @@ class Enemy extends SpriteAnimationComponent
     }
 
     super.update(dt);
+  }
+
+  void hit() {
+    AudioManager.instance.playSfx('bounce.wav');
+    current = State.hit;
+    animationTicker?.completed;
+    removeFromParent();
   }
 }
