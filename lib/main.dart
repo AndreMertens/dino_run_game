@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'game/dino_run.dart';
 import 'models/player_data.dart';
@@ -22,6 +23,8 @@ Future<void> main() async {
   // before was start calling hive and flame code
   // dealing with platform channels.
   WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+  await windowManager.setFullScreen(true);
 
   // Initializes hive and register the adapters.
   await initHive();
