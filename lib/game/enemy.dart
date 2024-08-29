@@ -101,5 +101,14 @@ class Enemy extends SpriteAnimationGroupComponent
     current = State.hit;
     animationTicker?.completed;
     removeFromParent();
+    if (modusSettings.modus == ModusType.easy) {
+      game.playerData.currentScore += 1;
+    } else if (modusSettings.modus == ModusType.medium) {
+      game.playerData.currentScore += 3;
+    } else if (modusSettings.modus == ModusType.hard) {
+      game.playerData.currentScore += 5;
+    } else {
+      game.playerData.currentScore += 1;
+    }
   }
 }
