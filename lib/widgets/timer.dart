@@ -1,20 +1,17 @@
 import 'dart:ui';
 
+import 'package:dino_run_game/game/dino_run.dart';
+import 'package:dino_run_game/models/modus_settings.dart';
+import 'package:dino_run_game/widgets/main_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '/game/dino_run.dart';
-import '/widgets/hud.dart';
-import 'settings_menu.dart';
+class ModusMenu extends StatelessWidget {
+  static const id = 'ModusMenu';
 
-// This represents the main menu overlay.
-class MainMenu extends StatelessWidget {
-  // An unique identified for this overlay.
-  static const id = 'MainMenu';
-
-  // Reference to parent game.
   final DinoRun game;
 
-  const MainMenu(this.game, {Key? key}) : super(key: key);
+  const ModusMenu(this.game, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +33,7 @@ class MainMenu extends StatelessWidget {
                 spacing: 10,
                 children: [
                   const Text(
-                    'Frappventure',
+                    'Modus',
                     style: TextStyle(
                       fontSize: 50,
                       color: Colors.white,
@@ -44,34 +41,44 @@ class MainMenu extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      game.startGamePlay();
-                      game.overlays.remove(MainMenu.id);
-                      game.overlays.add(Hud.id);
+                      Provider.of<ModusSettings>(context, listen: false).modus =
+                          ModusType.easy;
+                      game.changeBackground();
+                      game.overlays.remove(ModusMenu.id);
+                      game.overlays.add(MainMenu.id);
                     },
                     child: const Text(
-                      'Play',
+                      'Easy',
                       style: TextStyle(
                         fontSize: 30,
                       ),
                     ),
                   ),
-                  // // ElevatedButton(
-                  // //   onPressed: () {
-                  // //     game.overlays.remove(MainMenu.id);
-                  // //     game.overlays.add(ModusMenu.id);
-                  // //   },
-                  // //   child: const Text(
-                  // //     'Modus',
-                  // //     style: TextStyle(fontSize: 30),
-                  // //   ),
-                  // // ),
                   ElevatedButton(
                     onPressed: () {
-                      game.overlays.remove(MainMenu.id);
-                      game.overlays.add(SettingsMenu.id);
+                      Provider.of<ModusSettings>(context, listen: false).modus =
+                          ModusType.medium;
+                      game.changeBackground();
+                      game.overlays.remove(ModusMenu.id);
+                      game.overlays.add(MainMenu.id);
                     },
                     child: const Text(
-                      'Settings',
+                      'Medium',
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Provider.of<ModusSettings>(context, listen: false).modus =
+                          ModusType.hard;
+                      game.changeBackground();
+                      game.overlays.remove(ModusMenu.id);
+                      game.overlays.add(MainMenu.id);
+                    },
+                    child: const Text(
+                      'Hard',
                       style: TextStyle(
                         fontSize: 30,
                       ),

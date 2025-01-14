@@ -1,5 +1,4 @@
 import 'package:dino_run_game/models/modus_settings.dart';
-import 'package:dino_run_game/widgets/modus_menu.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
@@ -89,7 +88,6 @@ class DinoRunApp extends StatelessWidget {
             MainMenu.id: (_, game) => MainMenu(game),
             PauseMenu.id: (_, game) => PauseMenu(game),
             SettingsMenu.id: (_, game) => SettingsMenu(game),
-            ModusMenu.id: (_, game) => ModusMenu(game),
           },
           // By default MainMenu overlay will be active.
           initialActiveOverlays: const [MainMenu.id],

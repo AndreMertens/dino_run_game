@@ -63,6 +63,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
   ParallaxComponent parallaxBackground = ParallaxComponent();
 
   Vector2 get virtualSize => camera.viewport.virtualSize;
+  int counter = 0;
 
   // This method get called while flame is preparing this game.
   @override
