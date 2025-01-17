@@ -11,7 +11,7 @@ class ModusMenu extends StatelessWidget {
 
   final DinoRun game;
 
-  const ModusMenu(this.game, {Key? key}) : super(key: key);
+  const ModusMenu(this.game, {super.key});
 
   @override
   Widget build(BuildContext context) {

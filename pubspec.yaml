@@ -9,19 +9,23 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  flame: 1.10.0
-  provider: 6.0.5
+  flame: 1.22.0
+  provider: ^6.1.2
   hive: 2.2.3
-  path_provider: 2.1.1
-  flame_audio: 2.1.2
+  path_provider: ^2.1.5
+  flame_audio: ^2.0.0
   window_manager: ^0.4.2
+  flame_riverpod: ^5.0.0
 
 dev_dependencies:
   hive_generator: 2.0.1
-  build_runner: 2.4.6
+  build_runner: ^2.4.13
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^5.0.0
+
+dependency_overrides:
+  win32: ^5.5.4
 
 flutter:
   uses-material-design: true

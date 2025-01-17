@@ -117,13 +117,13 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
         modusSettings: modusSettings);
 
     // Timer to decide when to spawn next enemy.
-    Timer _timer = Timer(2, repeat: true);
+    Timer timer = Timer(2, repeat: true);
 
     if (modusSettings.modus == ModusType.hard) {
-      _timer = Timer(1.5, repeat: true);
+      timer = Timer(1.5, repeat: true);
     }
 
-    _enemyManager = EnemyManager(modusSettings: modusSettings, timer: _timer);
+    _enemyManager = EnemyManager(modusSettings: modusSettings, timer: timer);
     world.add(_dino);
     world.add(_enemyManager);
   }
