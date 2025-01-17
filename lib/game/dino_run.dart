@@ -6,18 +6,22 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
+import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:hive/hive.dart';
 
 import '../models/player_data.dart';
 import '../models/settings.dart';
+import '../modus.provider.dart';
 import '../widgets/game_over_menu.dart';
 import '../widgets/hud.dart';
 import 'audio_manager.dart';
 import 'enemy_manager.dart';
 
 // This is the main flame game class.
-class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
+class DinoRun extends FlameGame
+    with RiverpodGameMixin, TapDetector, HasCollisionDetection {
   final ModusSettings modusSettings;
+  int counter = 0;
 
   DinoRun({super.camera, required this.modusSettings});
 
@@ -63,11 +67,11 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
   ParallaxComponent parallaxBackground = ParallaxComponent();
 
   Vector2 get virtualSize => camera.viewport.virtualSize;
-  int counter = 0;
 
   // This method get called while flame is preparing this game.
   @override
   Future<void> onLoad() async {
+    super.onLoad();
     // Makes the game full screen and landscape only.
     await Flame.device.fullScreen();
     await Flame.device.setLandscape();
@@ -117,13 +121,18 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
         modusSettings: modusSettings);
 
     // Timer to decide when to spawn next enemy.
-    Timer timer = Timer(2, repeat: true);
+    Timer timer = Timer(2, repeat: true, onTick: () {
+      counter++;
+      if (counter >= 5) {
+        ref.read(modusNotifier.notifier).updateState(ModusType.medium);
+      }
+    });
 
     if (modusSettings.modus == ModusType.hard) {
       timer = Timer(1.5, repeat: true);
     }
 
-    _enemyManager = EnemyManager(modusSettings: modusSettings, timer: timer);
+    _enemyManager = EnemyManager(timer: timer);
     world.add(_dino);
     world.add(_enemyManager);
   }

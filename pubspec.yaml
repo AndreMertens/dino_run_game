@@ -16,6 +16,7 @@ dependencies:
   flame_audio: ^2.0.0
   window_manager: ^0.4.2
   flame_riverpod: ^5.0.0
+  flutter_riverpod: ^2.6.1
 
 dev_dependencies:
   hive_generator: 2.0.1

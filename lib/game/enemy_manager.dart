@@ -2,14 +2,17 @@ import 'dart:math';
 
 import 'package:dino_run_game/models/modus_settings.dart';
 import 'package:flame/components.dart';
+import 'package:flame_riverpod/flame_riverpod.dart';
 
 import '/game/dino_run.dart';
 import '/game/enemy.dart';
 import '/models/enemy_data.dart';
+import '../modus.provider.dart';
 
 // This class is responsible for spawning random enemies at certain
 // interval of time depending upon players current score.
-class EnemyManager extends Component with HasGameReference<DinoRun> {
+class EnemyManager extends Component
+    with HasGameReference<DinoRun>, RiverpodComponentMixin {
   // A list to hold data for all the enemies.
   final List<EnemyData> _data = [];
 
@@ -18,11 +21,9 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
 
   final Timer timer;
 
-  final ModusSettings modusSettings;
-
   int previousEnemyIndex = -1;
 
-  EnemyManager({required this.modusSettings, required this.timer}) {
+  EnemyManager({required this.timer}) {
     timer.onTick = spawnRandomEnemy;
   }
 
@@ -30,11 +31,12 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
   void spawnRandomEnemy() {
     /// Generate a random index within [_data] and get an [EnemyData].
     int randomIndex = _random.nextInt(_data.length);
+    final ModusType modus = ref.watch(modusNotifier);
 
     if (previousEnemyIndex == 0 && randomIndex == 1) {
       randomIndex += 1;
     }
-    if (modusSettings.modus == ModusType.hard &&
+    if (modus == ModusType.hard &&
         previousEnemyIndex == 1 &&
         randomIndex == 3) {
       randomIndex -= 1;
@@ -45,55 +47,55 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
 
     switch (enemyData.type) {
       case EnemyType.angryPig:
-        if (modusSettings.modus == ModusType.easy) {
+        if (modus == ModusType.easy) {
           enemyData.speedX = 50;
-        } else if (modusSettings.modus == ModusType.medium) {
+        } else if (modus == ModusType.medium) {
           enemyData.speedX = 100;
-        } else if (modusSettings.modus == ModusType.hard) {
+        } else if (modus == ModusType.hard) {
           enemyData.speedX = 150;
         } else {
           enemyData.speedX = 50;
         }
         break;
       case EnemyType.bat:
-        if (modusSettings.modus == ModusType.easy) {
+        if (modus == ModusType.easy) {
           enemyData.speedX = 60;
-        } else if (modusSettings.modus == ModusType.medium) {
+        } else if (modus == ModusType.medium) {
           enemyData.speedX = 110;
-        } else if (modusSettings.modus == ModusType.hard) {
+        } else if (modus == ModusType.hard) {
           enemyData.speedX = 160;
         } else {
           enemyData.speedX = 60;
         }
         break;
       case EnemyType.rino:
-        if (modusSettings.modus == ModusType.easy) {
+        if (modus == ModusType.easy) {
           enemyData.speedX = 100;
-        } else if (modusSettings.modus == ModusType.medium) {
+        } else if (modus == ModusType.medium) {
           enemyData.speedX = 150;
-        } else if (modusSettings.modus == ModusType.hard) {
+        } else if (modus == ModusType.hard) {
           enemyData.speedX = 200;
         } else {
           enemyData.speedX = 100;
         }
         break;
       case EnemyType.rock:
-        if (modusSettings.modus == ModusType.easy) {
+        if (modus == ModusType.easy) {
           enemyData.speedX = 90;
-        } else if (modusSettings.modus == ModusType.medium) {
+        } else if (modus == ModusType.medium) {
           enemyData.speedX = 140;
-        } else if (modusSettings.modus == ModusType.hard) {
+        } else if (modus == ModusType.hard) {
           enemyData.speedX = 190;
         } else {
           enemyData.speedX = 40;
         }
         break;
       case EnemyType.blueBird:
-        if (modusSettings.modus == ModusType.easy) {
+        if (modus == ModusType.easy) {
           enemyData.speedX = 50;
-        } else if (modusSettings.modus == ModusType.medium) {
+        } else if (modus == ModusType.medium) {
           enemyData.speedX = 100;
-        } else if (modusSettings.modus == ModusType.hard) {
+        } else if (modus == ModusType.hard) {
           enemyData.speedX = 150;
         } else {
           enemyData.speedX = 40;
@@ -103,7 +105,7 @@ class EnemyManager extends Component with HasGameReference<DinoRun> {
         break;
     }
 
-    final enemy = Enemy(enemyData, modusSettings);
+    final enemy = Enemy(enemyData);
 
     // Help in setting all enemies on ground.
     enemy.anchor = Anchor.bottomLeft;

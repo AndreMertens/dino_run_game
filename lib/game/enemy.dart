@@ -1,24 +1,25 @@
 import 'package:dino_run_game/game/audio_manager.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_riverpod/flame_riverpod.dart';
 
 import '/game/dino_run.dart';
 import '/models/enemy_data.dart';
 import '../models/modus_settings.dart';
+import '../modus.provider.dart';
 
 enum State { run, hit }
 
 // This represents an enemy in the game world.
 class Enemy extends SpriteAnimationGroupComponent
-    with CollisionCallbacks, HasGameReference<DinoRun> {
+    with CollisionCallbacks, HasGameReference<DinoRun>, RiverpodComponentMixin {
   // The data required for creation of this enemy.
   final EnemyData enemyData;
-  final ModusSettings modusSettings;
   bool moveUp = true;
   late final SpriteAnimation runAnimation;
   late final SpriteAnimation hitAnimation;
 
-  Enemy(this.enemyData, this.modusSettings) {
+  Enemy(this.enemyData) {
     runAnimation = SpriteAnimation.fromFrameData(
       enemyData.image,
       SpriteAnimationData.sequenced(
@@ -75,18 +76,18 @@ class Enemy extends SpriteAnimationGroupComponent
         position.y += 1;
       }
     }
-
+    final modus = ref.watch(modusNotifier);
     position.x -= enemyData.speedX * dt;
 
     // Remove the enemy and increase player score
     // by 1, if enemy has gone past left end of the screen.
     if (position.x < -enemyData.textureSize.x) {
       removeFromParent();
-      if (modusSettings.modus == ModusType.easy) {
+      if (modus == ModusType.easy) {
         game.playerData.currentScore += 1;
-      } else if (modusSettings.modus == ModusType.medium) {
+      } else if (modus == ModusType.medium) {
         game.playerData.currentScore += 3;
-      } else if (modusSettings.modus == ModusType.hard) {
+      } else if (modus == ModusType.hard) {
         game.playerData.currentScore += 5;
       } else {
         game.playerData.currentScore += 1;
@@ -100,12 +101,14 @@ class Enemy extends SpriteAnimationGroupComponent
     AudioManager.instance.playSfx('bounce.wav');
     current = State.hit;
     animationTicker?.completed;
+    final modus = ref.watch(modusNotifier);
+
     removeFromParent();
-    if (modusSettings.modus == ModusType.easy) {
+    if (modus == ModusType.easy) {
       game.playerData.currentScore += 1;
-    } else if (modusSettings.modus == ModusType.medium) {
+    } else if (modus == ModusType.medium) {
       game.playerData.currentScore += 3;
-    } else if (modusSettings.modus == ModusType.hard) {
+    } else if (modus == ModusType.hard) {
       game.playerData.currentScore += 5;
     } else {
       game.playerData.currentScore += 1;
