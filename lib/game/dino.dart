@@ -101,7 +101,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   void update(double dt) {
     // v = u + at
     speedY += gravity * dt;
-
+    // x += 5;
     // d = s0 + s * t
     y += speedY * dt;
 
@@ -138,7 +138,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
       removeFromParent();
     }
     anchor = Anchor.bottomLeft;
-    position = Vector2(0, game.virtualSize.y - 14);
+    //position = Vector2(0, game.virtualSize.y - 14);
     size = Vector2.all(24);
     current = DinoAnimationStates.run;
     speedY = 0.0;

@@ -6,6 +6,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 
+import '../models/check_collisions.dart';
 import '../models/custom_hitbox.dart';
 import '../models/fruits.dart';
 
@@ -323,7 +324,7 @@ class Player extends SpriteAnimationGroupComponent
     reachedCheckpoint = false;
     position = Vector2.all(-640);
 
-    const waitToChangeDuration = Duration(seconds: 3);
+    // const waitToChangeDuration = Duration(seconds: 3);
     // Future.delayed(waitToChangeDuration, () => game.loadNextLevel());
   }
 

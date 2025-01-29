@@ -4,10 +4,9 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-import 'package:flame/input.dart';
-import 'package:flame/parallax.dart';
 import 'package:hive/hive.dart';
 
+import '../models/level.dart';
 import '../models/player_data.dart';
 import '../models/settings.dart';
 import '../widgets/game_over_menu.dart';
@@ -19,7 +18,7 @@ import 'enemy_manager.dart';
 class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
   final ModusSettings modusSettings;
 
-  DinoRun({super.camera, required this.modusSettings});
+  DinoRun({super.world, super.camera, required this.modusSettings});
 
   // List of all the image assets.
   static const _imageAssets = [
@@ -60,9 +59,6 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
   late Settings settings;
 
-  ParallaxComponent parallaxBackground = ParallaxComponent();
-
-  Vector2 get virtualSize => camera.viewport.virtualSize;
   int counter = 0;
 
   // This method get called while flame is preparing this game.
@@ -88,27 +84,15 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     AudioManager.instance.startBgm('8BitPlatformerLoop.wav');
 
     // Cache all the images.
-    await images.loadAll(_imageAssets);
+    //await images.loadAll(_imageAssets);
+    // Load all images into cache
+    await images.loadAllImages();
+    _loadLevel();
 
     // This makes the camera look at the center of the viewport.
-    camera.viewfinder.position = camera.viewport.virtualSize * 0.5;
-
-    /// Create a [ParallaxComponent] and add it to game.
-    parallaxBackground = await loadParallaxComponent(
-      [
-        ParallaxImageData('parallax/plx-1.png'),
-        ParallaxImageData('parallax/plx-2.png'),
-        ParallaxImageData('parallax/plx-3.png'),
-        ParallaxImageData('parallax/plx-4.png'),
-        ParallaxImageData('parallax/plx-5.png'),
-        ParallaxImageData('parallax/plx-6.png'),
-      ],
-      baseVelocity: Vector2(10, 0),
-      velocityMultiplierDelta: Vector2(1.4, 0),
-    );
+    //camera.viewfinder.position = camera.viewport.virtualSize * 0.5;
 
     // Add the parallax as the backdrop.
-    camera.backdrop.add(parallaxBackground);
   }
 
   void startGamePlay() {
@@ -126,6 +110,13 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     _enemyManager = EnemyManager(modusSettings: modusSettings, timer: _timer);
     world.add(_dino);
     world.add(_enemyManager);
+  }
+
+  void _loadLevel() {
+    Future.delayed(const Duration(seconds: 1), () {
+      Level level = Level(levelName: 'Level-01');
+      camera.add(level);
+    });
   }
 
   // This will get called for each tap on the screen.
@@ -201,22 +192,5 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
     // Now it is safe to return the stored value.
     return settingsBox.get('DinoRun.Settings')!;
-  }
-
-  void changeBackground() async {
-    parallaxBackground = await loadParallaxComponent(
-      [
-        ParallaxImageData('parallax/plx-1.png'),
-        ParallaxImageData('parallax/plx-2.png'),
-        ParallaxImageData('parallax/plx-3.png'),
-        ParallaxImageData('parallax/plx-4.png'),
-        ParallaxImageData('parallax/plx-5.png'),
-        ParallaxImageData('parallax/plx-6.png'),
-      ],
-      baseVelocity: Vector2(10, 0),
-      velocityMultiplierDelta: Vector2(1.4, 0),
-    );
-
-    camera.backdrop.add(parallaxBackground);
   }
 }

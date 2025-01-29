@@ -5,21 +5,22 @@ import 'package:dino_run_game/models/collision_block.dart';
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
-import '../game/player.dart';
+import 'background_tile.dart';
 import 'fruits.dart';
-
 
 class Level extends World with HasGameRef<DinoRun> {
   final String levelName;
-  final Player player;
-  Level({required this.levelName, required this.player});
+  Level({
+    required this.levelName,
+  });
   late TiledComponent level;
+  late ScrollingBackground scrollingBackground;
   List<CollisionBlock> collisionBlocks = [];
 
   @override
   FutureOr<void> onLoad() async {
     level = await TiledComponent.load('$levelName.tmx', Vector2.all(16));
-
+    scrollingBackground = ScrollingBackground(level);
     add(level);
 
     _scrollingBackground();
@@ -49,11 +50,6 @@ class Level extends World with HasGameRef<DinoRun> {
     if (spawnPointsLayer != null) {
       for (final spawnPoint in spawnPointsLayer.objects) {
         switch (spawnPoint.class_) {
-          case 'Player':
-            player.position = Vector2(spawnPoint.x, spawnPoint.y);
-            player.scale.x = 1;
-            add(player);
-            break;
           case 'Fruit':
             final fruit = Fruit(
               fruit: spawnPoint.name,
@@ -80,8 +76,8 @@ class Level extends World with HasGameRef<DinoRun> {
           //     position: Vector2(spawnPoint.x, spawnPoint.y),
           //     size: Vector2(spawnPoint.width, spawnPoint.height),
           //   );
-            // add(trampoline);
-            // break;
+          // add(trampoline);
+          // break;
           // case 'Checkpoint':
           //   final checkpoint = Checkpoint(
           //     position: Vector2(spawnPoint.x, spawnPoint.y),
@@ -140,6 +136,27 @@ class Level extends World with HasGameRef<DinoRun> {
         }
       }
     }
-    player.collisionBlocks = collisionBlocks;
+  }
+}
+
+class ScrollingBackground extends PositionComponent {
+  final TiledComponent map;
+  double speed = 50; // Adjust the speed as needed
+
+  ScrollingBackground(this.map) {
+    add(map);
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+
+    // Move the map to the left
+    map.position.x -= speed * dt;
+
+    // Reset position for infinite scrolling (if needed)
+    if (map.position.x <= -map.size.x) {
+      map.position.x = 0;
+    }
   }
 }

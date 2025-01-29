@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'game/dino_run.dart';
+import 'models/level.dart';
 import 'models/player_data.dart';
 import 'models/settings.dart';
 import 'widgets/game_over_menu.dart';
@@ -94,11 +95,12 @@ class DinoRunApp extends StatelessWidget {
           gameFactory: () => DinoRun(
             // Use a fixed resolution camera to avoid manually
             // scaling and handling different screen sizes.
+            modusSettings: modusSettings,
             camera: CameraComponent.withFixedResolution(
               width: 88,
               height: 150,
             ),
-            modusSettings: modusSettings,
+            world: Level(levelName: 'Level-01'),
           ),
         ),
       ),

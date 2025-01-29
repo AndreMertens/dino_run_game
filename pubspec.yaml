@@ -9,7 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  flame: ^1.8.2
+  flame: 1.10.0
   provider: 6.0.5
   hive: 2.2.3
   path_provider: 2.1.1
@@ -27,7 +27,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/tiles/
+    - assets/images/Background/
+    - assets/images/Items/Fruits/
     - assets/images/
+    - assets/images/Terrain/
     - assets/images/parallax/
     - assets/images/AngryPig/
     - assets/images/Bat/
