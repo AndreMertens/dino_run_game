@@ -27,6 +27,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/Legacy-Fantasy - High Forest 2.3/
     - assets/tiles/
     - assets/images/Background/
     - assets/images/Items/Fruits/

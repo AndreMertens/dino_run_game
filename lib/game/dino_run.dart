@@ -12,36 +12,14 @@ import '../models/settings.dart';
 import '../widgets/game_over_menu.dart';
 import '../widgets/hud.dart';
 import 'audio_manager.dart';
+import 'dummy_target.dart';
 import 'enemy_manager.dart';
 
 // This is the main flame game class.
 class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
   final ModusSettings modusSettings;
 
-  DinoRun({super.world, super.camera, required this.modusSettings});
-
-  // List of all the image assets.
-  static const _imageAssets = [
-    'FrappDinoSprites-tard.png',
-    'Disappearing (96x96).png',
-    'AngryPig/Walk (36x30).png',
-    'Bat/Flying (46x30).png',
-    'Rino/Run (52x34).png',
-    'parallax/plx-1.png',
-    'parallax/plx-2.png',
-    'parallax/plx-3.png',
-    'parallax/plx-4.png',
-    'parallax/plx-5.png',
-    'parallax/plx-6.png',
-    'parallax/plx-7.png',
-    'parallax/plx-8.png',
-    'parallax/plx-9.png',
-    'parallax/plx-10.png',
-    'parallax/plx-11.png',
-    'parallax/plx-12.png',
-    'Rock/Rock3_Run (22x18).png',
-    'BlueBird/Flying (32x32).png',
-  ];
+  DinoRun({required this.modusSettings, super.camera, super.world});
 
   // List of all the audio assets.
   static const _audioAssets = [
@@ -58,8 +36,11 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
   late PlayerData playerData;
 
   late Settings settings;
+  late final DummyTarget target;
 
   int counter = 0;
+
+  // This method get called while flame is preparing this game.
 
   // This method get called while flame is preparing this game.
   @override
@@ -72,12 +53,21 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     playerData = await _readPlayerData();
 
     settings = await _readSettings();
+    world = World();
+    add(world);
+    camera = CameraComponent.withFixedResolution(width: 800, height: 500);
+    camera.world = world;
+
+    await Future.delayed(const Duration(milliseconds: 100));
 
     // Initialize [AudioManager].
     await AudioManager.instance.init(
       _audioAssets,
       settings,
     );
+
+    target = DummyTarget();
+    add(target);
 
     // Start playing background music. Internally takes care
     // of checking user settings.
@@ -88,6 +78,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     // Load all images into cache
     await images.loadAllImages();
     _loadLevel();
+    world = Level(levelName: 'Frapp-02');
 
     // This makes the camera look at the center of the viewport.
     //camera.viewfinder.position = camera.viewport.virtualSize * 0.5;
@@ -99,22 +90,24 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     _dino = Dino(
         image: images.fromCache('FrappDinoSprites-tard.png'),
         modusSettings: modusSettings);
+    camera.follow(_dino);
 
     // Timer to decide when to spawn next enemy.
-    Timer _timer = Timer(2, repeat: true);
+    Timer timer = Timer(2, repeat: true);
 
     if (modusSettings.modus == ModusType.hard) {
-      _timer = Timer(1.5, repeat: true);
+      timer = Timer(1.5, repeat: true);
     }
 
-    _enemyManager = EnemyManager(modusSettings: modusSettings, timer: _timer);
+    _enemyManager = EnemyManager(modusSettings: modusSettings, timer: timer);
     world.add(_dino);
     world.add(_enemyManager);
   }
 
   void _loadLevel() {
     Future.delayed(const Duration(seconds: 1), () {
-      Level level = Level(levelName: 'Level-01');
+      Level level = Level(levelName: 'Frapp-02');
+      add(level);
       camera.add(level);
     });
   }

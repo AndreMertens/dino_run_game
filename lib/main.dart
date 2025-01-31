@@ -1,5 +1,5 @@
 import 'package:dino_run_game/models/modus_settings.dart';
-import 'package:flame/camera.dart';
+import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'game/dino_run.dart';
-import 'models/level.dart';
 import 'models/player_data.dart';
 import 'models/settings.dart';
 import 'widgets/game_over_menu.dart';
@@ -30,7 +29,6 @@ Future<void> main() async {
   await initHive();
 
   final ModusSettings modusSettings = ModusSettings();
-
   runApp(MultiProvider(providers: [
     Provider(create: (context) => modusSettings),
   ], child: DinoRunApp(modusSettings: modusSettings)));
@@ -96,11 +94,11 @@ class DinoRunApp extends StatelessWidget {
             // Use a fixed resolution camera to avoid manually
             // scaling and handling different screen sizes.
             modusSettings: modusSettings,
+            world: World(),
             camera: CameraComponent.withFixedResolution(
-              width: 88,
-              height: 150,
+              width: 800,
+              height: 500,
             ),
-            world: Level(levelName: 'Level-01'),
           ),
         ),
       ),
